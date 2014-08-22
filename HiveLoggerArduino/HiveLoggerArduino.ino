@@ -58,11 +58,12 @@ char srtTimeBuf[25];
 
 #define NUMBER_OF_ALARMS  3
 // Alarms are set in loop, in the order below (first to last).
+// TODO: set alarms from file
 RTC_Time rtcAlarms[NUMBER_OF_ALARMS] = 
 {
   // hour, minute, second
-  {0,0,0},  // 5h
-  {23,40,0}  // 22h
+  {5,0,0},  // 5h
+  {22,0,0}  // 22h
 };
 
 byte rtcCurrentAlarm = 0;
@@ -143,8 +144,6 @@ void setup()
   rtc.init();
   rtc.get_time();
 
-  // TODO: setup time from file
-
   // Init SD card
   if (!SD.begin(10)) 
   {
@@ -158,6 +157,7 @@ void setup()
   }
 
 
+  // Set date & time from file if button pressed
   if (digitalRead(button1Pin) == 0) {
     while (!digitalRead(button1Pin)); // Wait for release (allow synchronisation)
     // Update date and time from file
