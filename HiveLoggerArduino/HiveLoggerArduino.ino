@@ -61,9 +61,8 @@ char srtTimeBuf[25];
 RTC_Time rtcAlarms[NUMBER_OF_ALARMS] = 
 {
   // hour, minute, second
-  {23,0,0},  // 5h
-  {23,1,0},  // 22h
-  {23,2,0}   // 22h
+  {0,0,0},  // 5h
+  {23,40,0}  // 22h
 };
 
 byte rtcCurrentAlarm = 0;
