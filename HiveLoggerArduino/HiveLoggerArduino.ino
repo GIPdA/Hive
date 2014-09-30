@@ -48,6 +48,7 @@ const byte scaleTarePin = 3;
 volatile boolean bScaleISRFlag = 0;
 
 const int button1Pin = 8;  // Tare & datetime update button
+const int errorLedPin = 4;  // D4
 
 
 // RTC
@@ -137,6 +138,8 @@ void setup()
   DBG( Serial.begin(9600);)
   pinMode(button1Pin, INPUT);
   pinMode(10, OUTPUT);  // SD card CS pin
+  digitalWrite(errorLedPin, LOW);
+  pinMode(errorLedPin, OUTPUT);
 
   delay(2000);
 
@@ -150,6 +153,7 @@ void setup()
     DBG( Serial.println("Error, SD init failed!");)
     delay(300);
     // Reset ?
+    digitalWrite(errorLedPin, HIGH);
     while(1) {
       sleepNow();
     }
@@ -199,6 +203,7 @@ void setup()
     DBG( Serial.println("Too much logs, please empty the SD card.");)
     delay(300);
     // Reset ?
+    digitalWrite(errorLedPin, HIGH);
     while(1) {
       sleepNow();
     }
@@ -217,6 +222,7 @@ void setup()
     DBG( Serial.println("Error, unable to create hive log!");)
     delay(300);
     // Reset ?
+    digitalWrite(errorLedPin, HIGH);
     while(1) {
       sleepNow();
     }
@@ -339,6 +345,7 @@ void vScale_saveOffset()
       DBG( Serial.println(" success.");)
     } else {
       DBG( Serial.println(" failed!");)
+      digitalWrite(errorLedPin, HIGH);
       return;
     }
   }
@@ -351,6 +358,7 @@ void vScale_saveOffset()
   } else {
     // Error, can't create/open file
     DBG( Serial.println("Error, unable to create offset.txt!");)
+    digitalWrite(errorLedPin, HIGH);
   }
   sdFile.close();
 
@@ -498,6 +506,7 @@ void loop()
     // If the file didn't open, print an error:
     DBG( Serial.print("Error, logging failed at ");)
     DBG( Serial.println(pcRTC_formatDateAndTime());)
+    digitalWrite(errorLedPin, HIGH);
   }
   sdFile.close();
 
