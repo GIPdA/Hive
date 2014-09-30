@@ -57,7 +57,7 @@ const int rtc_inputPin = 2;
 char srtTimeBuf[25];
 
 
-#define NUMBER_OF_ALARMS  3
+#define NUMBER_OF_ALARMS  2
 // Alarms are set in loop, in the order below (first to last).
 // TODO: set alarms from file
 RTC_Time rtcAlarms[NUMBER_OF_ALARMS] = 
